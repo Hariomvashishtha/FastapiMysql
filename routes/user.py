@@ -4,6 +4,8 @@ from models.index import users
 from schemas.index import  User
 from schemas.index import UserUpdate
 user = APIRouter()
+
+#get request to get all user data
 @user.get('/')
 async def getUser():
     result  =  conn.execute(users.select()).fetchall()
@@ -12,6 +14,7 @@ async def getUser():
     print(json_result)
     return json_result
 
+# get request to get user data by id
 @user.get('/{id}')
 async def getUser(id:int):
     result = conn.execute(users.select().where(users.c.id ==id )).fetchall()
@@ -22,6 +25,7 @@ async def getUser(id:int):
     return json_result
 
 
+# post request to create user
 @user.post('/')
 async def CreateUser(user:User):
     test = "hi"
@@ -40,7 +44,7 @@ async def CreateUser(user:User):
     
 
 
-
+# put request to update user data
 @user.put('/{id}')
 async def updateUser(id :int , user:UserUpdate):
     existing_user = conn.execute(users.select().where(users.c.id == id)).fetchone()
@@ -60,6 +64,7 @@ async def updateUser(id :int , user:UserUpdate):
     return json_result
 
 
+# delete request to delete user data
 @user.delete('/{id}')
 async def deleteUser(id:int):
     conn.execute(users.delete().where(users.c.id == id))

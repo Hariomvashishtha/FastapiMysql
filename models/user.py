@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, Table, true
 from config.db import meta
-
-
 users = Table(
     'users',meta,
     Column('id',Integer,primary_key=True),
